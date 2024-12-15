@@ -62,13 +62,19 @@ const productTestHelper = {
   },
 
   async createTestOrders(count = 5) {
-    const orders = [];
+    const { create: createOrder } = require('../orders');
     for (let i = 0; i < count; i++) {
-      const order = await this.createTestOrder();
-      orders.push(order);
+      await createOrder({
+        buyerEmail: `testbuyer${i}@example.com`,
+        items: [
+          {
+            productId: this.testProductIds[0],
+            quantity: 1
+          }
+        ]
+      });
     }
-    return orders;
-  },
+  }
 };
 
 module.exports = productTestHelper;
